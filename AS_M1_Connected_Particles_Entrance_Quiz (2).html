@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AS M1 Connected Particles Entrance Quiz</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6fa;color:#172033}
+.container{max-width:900px;margin:0 auto;padding:24px}
+.header{background:#163b70;color:white;padding:24px;border-radius:12px 12px 0 0}
+.header h1{margin:0 0 6px;font-size:28px}
+.header p{margin:0;font-size:15px}
+.card{background:white;padding:28px;border-radius:0 0 12px 12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.progress{height:10px;background:#e3e8ef;border-radius:5px;overflow:hidden;margin-bottom:22px}
+.bar{height:100%;width:0;background:#2b6cb0;transition:.25s}
+.qnum{font-weight:bold;color:#2b6cb0;font-size:14px}
+.question{font-size:22px;line-height:1.45;margin:10px 0 22px}
+.option{display:block;border:2px solid #d8dee8;border-radius:9px;padding:14px 16px;margin:10px 0;cursor:pointer;background:#fff;font-size:17px}
+.option:hover{background:#f5f8fc}
+.option input{margin-right:10px}
+button{border:0;border-radius:8px;padding:12px 20px;font-size:16px;font-weight:bold;cursor:pointer}
+#next{background:#163b70;color:white}
+#hintBtn{background:#eef3f8;color:#163b70;margin-right:8px}
+.feedback{margin-top:18px;padding:15px;border-radius:8px;background:#f2f5f8;display:none;line-height:1.45}
+.feedback.correct{border-left:5px solid #2e7d52}
+.feedback.incorrect{border-left:5px solid #b23b3b}
+.controls{margin-top:22px;display:flex;justify-content:space-between;align-items:center}
+.hint{display:none;margin-top:12px;padding:12px;background:#fff8e8;border-left:4px solid #d38b22;border-radius:5px}
+.score{text-align:center;padding:20px}
+.score h2{font-size:32px;color:#163b70}
+.small{font-size:13px;color:#657080}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>AS Pearson Edexcel M1 — Connected Particles</h1>
+<p>Entrance Ticket • 10 questions • Single answer • Diagnostic practice</p>
+</div>
+<div class="card" id="quizCard">
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div id="quiz"></div>
+<div class="controls">
+<div><button id="hintBtn" type="button">Show hint</button></div>
+<button id="next" type="button">Check answer</button>
+</div>
+<div class="small" style="margin-top:16px">Use g = 9.8 m s⁻² unless a question states otherwise.</div>
+</div>
+</div>
+<script>
+const questions = [{"q": "Two particles of masses 3 kg and 5 kg are connected by a light, inextensible string passing over a smooth pulley. The 5 kg particle moves downward. What is the acceleration of the system?", "opts": ["1.225 m s⁻²", "2.45 m s⁻²", "3.92 m s⁻²", "4.90 m s⁻²"], "ans": 1, "hint": "Write Newton's second law for both particles and eliminate the tension.", "exp": ["The acceleration is not 1.225 m s⁻². Using the two equations gives a = 2.45 m s⁻².", "Using 5g − T = 5a and T − 3g = 3a gives 2g = 8a, so a = 2.45 m s⁻².", "The acceleration is not 3.92 m s⁻². The mass difference must be divided by the total mass.", "4.90 m s⁻² is too large for this system; the equations give 2.45 m s⁻²."]}, {"q": "For the same 3 kg and 5 kg system, what is the tension in the string? Take g = 9.8 m s⁻².", "opts": ["22.05 N", "29.40 N", "36.75 N", "49.00 N"], "ans": 2, "hint": "Use either particle's equation of motion after finding the acceleration.", "exp": ["22.05 N does not satisfy T − 3g = 3a when a = 2.45 m s⁻².", "29.40 N is below the value required by the equation of motion for the 3 kg particle.", "T = 3(9.8 + 2.45) = 36.75 N, so this value satisfies the equation for the 3 kg particle.", "49.00 N is equal to the weight of the 5 kg particle, but the tension is less because that particle accelerates downward."]}, {"q": "A 4 kg particle rests on a smooth horizontal table and is connected over a smooth pulley to a hanging 2 kg particle. What is the acceleration?", "opts": ["1.63 m s⁻²", "3.27 m s⁻²", "4.90 m s⁻²", "9.80 m s⁻²"], "ans": 1, "hint": "The driving force is the weight of the hanging particle; use the total mass of both particles.", "exp": ["The acceleration is not 1.63 m s⁻². The driving force divided by total mass gives 3.27 m s⁻².", "a = 2g/(4 + 2) = 19.6/6 = 3.27 m s⁻².", "4.90 m s⁻² would not satisfy the two equations of motion for this system.", "9.80 m s⁻² is the acceleration due to gravity, but the 4 kg particle's inertia reduces the system acceleration."]}, {"q": "A 6 kg particle is on a smooth horizontal table and is connected to a 3 kg hanging particle. The tension is T and the acceleration is a. Which equation is correct for the 6 kg particle?", "opts": ["T = 6g", "6g − T = 6a", "T = 6a", "T + 6g = 6a"], "ans": 2, "hint": "The 6 kg particle has no vertical acceleration and its horizontal driving force is the tension.", "exp": ["T = 6g is not the horizontal equation of motion for the 6 kg particle.", "6g − T = 6a applies to a particle with weight acting along the chosen direction, not this horizontal particle.", "The net horizontal force is T, so Newton's second law gives T = 6a.", "Adding 6g is inappropriate because the weight of the 6 kg particle is vertical, not horizontal."]}, {"q": "A light inextensible string connects two particles. Which statement about their accelerations is correct while the string remains taut?", "opts": ["They have equal accelerations in the same direction.", "They have equal magnitudes of acceleration in opposite directions along the string.", "The heavier particle has the greater acceleration.", "The lighter particle has zero acceleration."], "ans": 1, "hint": "Use the meaning of an inextensible string: its length cannot change.", "exp": ["The particles generally move in opposite directions along the string, so their accelerations are not in the same direction.", "Because the string is inextensible, the particles have equal acceleration magnitudes in opposite directions along the string.", "The masses affect the common acceleration magnitude; the heavier particle does not automatically have a greater acceleration.", "Neither particle must have zero acceleration in a typical connected-particle system."]}, {"q": "A particle of mass 4 kg is pulled horizontally on a rough surface by a horizontal force of 20 N. The coefficient of friction is 0.25 and g = 9.8 m s⁻². What is its acceleration?", "opts": ["0.05 m s⁻²", "2.55 m s⁻²", "3.775 m s⁻²", "5.00 m s⁻²"], "ans": 1, "hint": "Calculate friction from μR, then use resultant force = mass × acceleration.", "exp": ["The acceleration is not 0.05 m s⁻². The resultant force is 20 − 9.8 = 10.2 N.", "Friction = 0.25 × 4 × 9.8 = 9.8 N, so 20 − 9.8 = 4a and a = 2.55 m s⁻².", "3.775 m s⁻² does not result from the correct resultant force divided by 4 kg.", "5.00 m s⁻² would require a resultant force of 20 N, which ignores friction."]}, {"q": "A 5 kg particle moves down a vertical string-connected system with acceleration 1.96 m s⁻². What is the tension in the string? Take g = 9.8 m s⁻².", "opts": ["29.4 N", "39.2 N", "49.0 N", "58.8 N"], "ans": 1, "hint": "For the downward-moving particle, weight minus tension equals ma.", "exp": ["29.4 N would give a larger downward resultant than the stated acceleration.", "5g − T = 5(1.96), so T = 49 − 9.8 = 39.2 N.", "49.0 N is the particle's weight, not the tension when it is accelerating downward.", "58.8 N is greater than the particle's weight and cannot satisfy the stated downward equation."]}, {"q": "A particle moves with constant velocity. What is the resultant force acting on it?", "opts": ["Zero", "Equal to its weight", "Equal to its mass", "Constant but non-zero"], "ans": 0, "hint": "Constant velocity means zero acceleration.", "exp": ["Constant velocity means acceleration is zero, so Newton's second law gives resultant force zero.", "The resultant force is not necessarily equal to the weight; other forces can balance the weight.", "Mass is not a force and cannot be the resultant force.", "A non-zero resultant force would produce acceleration, contradicting constant velocity."]}, {"q": "Two particles are connected by a light string over a smooth pulley. Which modelling assumption means the tension is the same throughout the string?", "opts": ["The particles are smooth.", "The pulley is light.", "The string is light.", "The particles are in equilibrium."], "ans": 2, "hint": "Identify which idealisation removes significant mass from the string itself.", "exp": ["Smooth particles are not the relevant modelling assumption for uniform tension in the string.", "A smooth pulley means the pulley does not introduce frictional resistance at the contact, but the key string assumption is different.", "A light string has negligible mass, so its tension is uniform throughout an ideal connected-particle model.", "The particles need not be in equilibrium; connected particles may accelerate."]}, {"q": "A 2 kg particle and a 7 kg particle are connected by a light inextensible string over a smooth pulley. The 7 kg particle moves downward. What is the tension, using g = 9.8 m s⁻²?", "opts": ["13.07 N", "27.22 N", "30.59 N", "45.73 N"], "ans": 2, "hint": "First find a = (difference in weights)/(total mass), then substitute into the equation for the 2 kg particle.", "exp": ["13.07 N is too small to satisfy the equation of motion for the 2 kg particle.", "27.22 N does not satisfy T = 2(g + a) for the correct acceleration.", "a = 5g/9 = 5.44 m s⁻², so T = 2(9.8 + 5.44) = 30.59 N.", "45.73 N is not the tension obtained from either particle's equation of motion."]}];
+let i=0, score=0, answered=false;
+const quiz=document.getElementById('quiz');
+const next=document.getElementById('next');
+const hintBtn=document.getElementById('hintBtn');
+const bar=document.getElementById('bar');
+
+function render(){
+ answered=false;
+ hintBtn.disabled=false;
+ hintBtn.textContent='Show hint';
+ next.textContent='Check answer';
+ const q=questions[i];
+ bar.style.width=((i)/questions.length*100)+'%';
+ quiz.innerHTML=`<div class="qnum">QUESTION ${i+1} OF ${questions.length}</div>
+ <div class="question">${q.q}</div>
+ <div>${q.opts.map((o,j)=>`<label class="option"><input type="radio" name="answer" value="${j}"> <strong>${String.fromCharCode(65+j)}</strong> — ${o}</label>`).join('')}</div>
+ <div class="hint" id="hint">${q.hint}</div>
+ <div class="feedback" id="feedback"></div>`;
+}
+hintBtn.onclick=()=>{
+ const h=document.getElementById('hint');
+ h.style.display=h.style.display==='block'?'none':'block';
+ hintBtn.textContent=h.style.display==='block'?'Hide hint':'Show hint';
+};
+next.onclick=()=>{
+ if(!answered){
+  const selected=document.querySelector('input[name="answer"]:checked');
+  if(!selected){alert('Please select an answer.');return;}
+  const chosen=Number(selected.value), q=questions[i], fb=document.getElementById('feedback');
+  document.querySelectorAll('input[name="answer"]').forEach(x=>x.disabled=true);
+  if(chosen===q.ans){
+   score++; fb.className='feedback correct'; fb.innerHTML='<strong>Correct.</strong> '+q.exp[chosen];
+  }else{
+   fb.className='feedback incorrect'; fb.innerHTML='<strong>Review.</strong> '+q.exp[chosen]+'<br><br><strong>Best answer:</strong> '+q.opts[q.ans]+'. '+q.exp[q.ans];
+  }
+  fb.style.display='block'; answered=true; next.textContent=i===questions.length-1?'See result':'Next question'; hintBtn.disabled=true;
+ }else{
+  if(i<questions.length-1){i++;render();}
+  else{showResult();}
+ }
+};
+function showResult(){
+ bar.style.width='100%';
+ const pct=Math.round(score/questions.length*100);
+ let msg=pct>=80?'Strong start — you are ready for more challenging connected-particle problems.':
+         pct>=60?'Good foundation — review any questions involving equations of motion or modelling assumptions.':
+         'Use the feedback to review force diagrams, Newton’s second law, tension and acceleration before continuing.';
+ document.getElementById('quizCard').innerHTML=`<div class="score"><h2>Score: ${score} / ${questions.length}</h2><p style="font-size:20px">${pct}%</p><p>${msg}</p><button onclick="location.reload()" style="background:#163b70;color:white">Try again</button></div>`;
+}
+render();
+</script>
+</body>
+</html>
